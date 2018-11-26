@@ -1034,13 +1034,23 @@ func (c *Conn) GetW(path string) ([]byte, *Stat, <-chan Event, error) {
 	return res.Data, &res.Stat, ech, err
 }
 
-func (c *Conn) Set(path string, data []byte, version int32) (*Stat, error) {
+func (c *Conn) Set(path string, data []byte) (*Stat, error) {
 	if err := validatePath(path, false); err != nil {
 		return nil, err
 	}
 
 	res := &setDataResponse{}
-	_, err := c.request(opSetData, &SetDataRequest{path, data, version}, res, nil)
+	_, err := c.request(opSetData, &SetDataRequest{path, data}, res, nil)
+	return &res.Stat, err
+}
+
+func (c *Conn) SetByVersion(path string, data []byte, version int32) (*Stat, error) {
+	if err := validatePath(path, false); err != nil {
+		return nil, err
+	}
+
+	res := &setDataResponse{}
+	_, err := c.request(opSetData, &SetByVersionDataRequest{path, data, version}, res, nil)
 	return &res.Stat, err
 }
 

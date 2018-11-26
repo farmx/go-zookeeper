@@ -112,7 +112,7 @@ func TestMulti(t *testing.T) {
 	}
 	ops := []interface{}{
 		&CreateRequest{Path: path, Data: []byte{1, 2, 3, 4}, Acl: WorldACL(PermAll)},
-		&SetDataRequest{Path: path, Data: []byte{1, 2, 3, 4}, Version: -1},
+		&SetByVersionDataRequest{Path: path, Data: []byte{1, 2, 3, 4}, Version: -1},
 	}
 	if res, err := zk.Multi(ops...); err != nil {
 		t.Fatalf("Multi returned error: %+v", err)

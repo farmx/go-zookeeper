@@ -225,6 +225,11 @@ type setAclResponse statResponse
 type SetDataRequest struct {
 	Path    string
 	Data    []byte
+}
+
+type SetByVersionDataRequest struct {
+	Path    string
+	Data    []byte
 	Version int32
 }
 
